@@ -1,8 +1,8 @@
 import mock
 import unittest
 
-from pyoembed.providers.autodiscover import AutoDiscoverProvider, \
-     ProviderException
+from pyoembed.exceptions import ProviderException
+from pyoembed.providers.autodiscover import AutoDiscoverProvider
 from pyoembed.tests import get_fixture
 
 

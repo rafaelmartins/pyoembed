@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from urlparse import urljoin
 
-from pyoembed.providers import BaseProvider, ProviderException
+from pyoembed.exceptions import ProviderException
+from pyoembed.providers import BaseProvider
 
 
 class AutoDiscoverProvider(BaseProvider):

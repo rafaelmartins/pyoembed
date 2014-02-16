@@ -1,9 +1,6 @@
-import os
 from abc import ABCMeta, abstractmethod, abstractproperty
 
-
-class ProviderException(Exception):
-    pass
+from pyoembed.utils import get_metaclass_objects
 
 
 class BaseProvider(object):
@@ -22,27 +19,9 @@ class BaseProvider(object):
         pass
 
 
-def _get_providers():
-    cwd = os.path.dirname(os.path.abspath(__file__))
-    imported = []
-    for provider_file in os.listdir(cwd):
-        provider, ext = os.path.splitext(provider_file)
-        if ext not in ['.py', '.pyc', '.pyo']:
-            continue
-        if provider in ['__init__']:
-            continue
-        if provider not in imported:
-            __import__('pyoembed.providers.%s' % provider)
-            imported.append(provider)
-    providers = [provider() for provider in BaseProvider.__subclasses__()]
-    return sorted(providers, key=lambda x: x.priority)
-
-
-providers = _get_providers()
-del _get_providers
-
-
 def get_provider(url):
+    providers = get_metaclass_objects(__name__, BaseProvider,
+                                      lambda x: x.priority)
     for provider in providers:
         if provider.url_supported(url):
             return provider
