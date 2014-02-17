@@ -4,7 +4,7 @@ from urlparse import parse_qs, urlsplit, urlunsplit
 
 from pyoembed.data_types import get_data_type
 from pyoembed.exceptions import DataTypeException, ParserException, \
-     ProviderException, PyOembedException
+    ProviderException, PyOembedException
 from pyoembed.parsers import get_parser
 from pyoembed.providers import get_provider
 

@@ -3,7 +3,7 @@ import unittest
 
 from pyoembed import oEmbed
 from pyoembed.exceptions import DataTypeException, ParserException, \
-     ProviderException, PyOembedException
+    ProviderException, PyOembedException
 
 
 class oEmbedTestCase(unittest.TestCase):
@@ -102,4 +102,3 @@ class oEmbedTestCase(unittest.TestCase):
         parser.content_parse.assert_called_once_with('bola')
         provider.oembed_url.assert_called_once_with('foo')
         get.assert_called_once_with('http://google.com/foo')
-
