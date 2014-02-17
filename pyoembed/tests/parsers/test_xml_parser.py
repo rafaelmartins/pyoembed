@@ -16,7 +16,7 @@ class XmlParserTestCase(unittest.TestCase):
         self.assertFalse(self.parser.content_supported('application/json'))
 
     def test_content_parse(self):
-        content = get_fixture('sample.xml')
+        content = get_fixture('sample-video.xml')
         rv = self.parser.content_parse(content)
         self.assertEqual(rv, {'provider_url': 'http://www.youtube.com/',
                               'author_name': 'Showlivre',

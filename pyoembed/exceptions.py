@@ -8,3 +8,7 @@ class ParserException(PyOembedException):
 
 class ProviderException(PyOembedException):
     pass
+
+
+class DataTypeException(PyOembedException):
+    pass
