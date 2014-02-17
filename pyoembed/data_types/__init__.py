@@ -9,15 +9,15 @@ class BaseDataType(object):
 
     @abstractproperty
     def priority(self):
-        pass
+        pass  # pragma: no cover
 
     @abstractproperty
     def name(self):
-        pass
+        pass  # pragma: no cover
 
     @abstractproperty
     def required_fields(self):
-        pass
+        pass  # pragma: no cover
 
     def type_supported(self, data):
         if 'type' in data:

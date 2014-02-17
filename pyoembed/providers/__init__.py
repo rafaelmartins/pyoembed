@@ -8,15 +8,15 @@ class BaseProvider(object):
 
     @abstractproperty
     def priority(self):
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def url_supported(self, url):
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def oembed_url(self, url):
-        pass
+        pass  # pragma: no cover
 
 
 def get_provider(url):

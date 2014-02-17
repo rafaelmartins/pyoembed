@@ -3,7 +3,8 @@ from urllib import urlencode
 from urlparse import parse_qs, urlsplit, urlunsplit
 
 from pyoembed.data_types import get_data_type
-from pyoembed.exceptions import PyOembedException, ProviderException
+from pyoembed.exceptions import DataTypeException, ParserException, \
+     ProviderException, PyOembedException
 from pyoembed.parsers import get_parser
 from pyoembed.providers import get_provider
 
@@ -37,7 +38,7 @@ def oEmbed(url, maxwidth=None, maxheight=None):
     content_type = response.headers.get('content-type', None)
     parser = get_parser(content_type)
     if parser is None:
-        raise PyOembedException('Failed to find a parser for url: %s' % url)
+        raise ParserException('Failed to find a parser for url: %s' % url)
 
     # parse oEmbed request
     data = parser.content_parse(response.text)
@@ -45,7 +46,7 @@ def oEmbed(url, maxwidth=None, maxheight=None):
     # get data type
     data_type = get_data_type(data)
     if data_type is None:
-        raise PyOembedException('Failed to find a data type for url: %s' % url)
+        raise DataTypeException('Failed to find a data type for url: %s' % url)
 
     # validate data
     data_type.validate_data(data)

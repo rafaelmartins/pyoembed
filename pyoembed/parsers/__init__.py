@@ -8,15 +8,15 @@ class BaseParser(object):
 
     @abstractproperty
     def priority(self):
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def content_supported(self, content_type):
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def content_parse(self, content):
-        pass
+        pass  # pragma: no cover
 
 
 def get_parser(content_type):
