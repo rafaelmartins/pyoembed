@@ -1,6 +1,7 @@
 import requests
+from collections import OrderedDict
 from urllib import urlencode
-from urlparse import parse_qs, urlsplit, urlunsplit
+from urlparse import parse_qsl, urlsplit, urlunsplit
 
 from pyoembed.data_types import get_data_type
 from pyoembed.exceptions import DataTypeException, ParserException, \
@@ -17,7 +18,7 @@ def oEmbed(url, maxwidth=None, maxheight=None):
 
     # lets parse url to append our own width/height parameters
     scheme, netloc, path, query_string, fragment = urlsplit(oembed_url)
-    query_params = parse_qs(query_string)
+    query_params = OrderedDict(parse_qsl(query_string))
 
     # append width/height parameters
     if maxwidth is not None:

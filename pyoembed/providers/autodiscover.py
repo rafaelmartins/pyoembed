@@ -8,7 +8,12 @@ from pyoembed.providers import BaseProvider
 
 class AutoDiscoverProvider(BaseProvider):
 
-    priority = 9999  # should be the last, always.
+    priority = 99999999  # should be the last, always.
+
+    # following properties are not used because we are overriding all the
+    # methods that used them.
+    oembed_endpoint = None
+    oembed_schemas = None
 
     def url_supported(self, url):
         return True  # autodiscover supports anything :)
