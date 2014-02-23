@@ -13,6 +13,8 @@ class JsonParserTestCase(unittest.TestCase):
     def test_content_supported(self):
         self.assertTrue(self.parser.content_supported('text/json'))
         self.assertTrue(self.parser.content_supported('application/json'))
+        self.assertTrue(self.parser.content_supported('text/javascript'))
+        self.assertTrue(self.parser.content_supported('application/javascript'))
         self.assertFalse(self.parser.content_supported('text/xml'))
 
     def test_content_parse(self):
