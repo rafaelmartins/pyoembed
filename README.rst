@@ -27,6 +27,7 @@ the url content, and it is called ``oEmbed``:
    from pyoembed import oEmbed, PyOembedException
 
    try:
+       # maxwidth and maxheight are optional.
        data = oEmbed('http://www.youtube.com/watch?v=_PEdPBEpQfY',
                      maxwidth=640, maxheight=480)
    except PyOembedException, e:
