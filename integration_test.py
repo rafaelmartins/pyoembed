@@ -181,9 +181,6 @@ URLS = [
     'http://www.twitter.com/rafaelmartins/status/424199153364008960',
     'https://twitter.com/rafaelmartins/status/424199153364008960',
     'https://www.twitter.com/rafaelmartins/status/424199153364008960',
-
-    # Photobucket
-    'http://i967.photobucket.com/albums/ae153/heroine5/woman.jpg',
 ]
 
 
