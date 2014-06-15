@@ -1,8 +1,8 @@
 pyoembed
 ========
 
-.. image:: https://travis-ci.org/rafaelmartins/pyoembed.png
-   :target: https://travis-ci.org/rafaelmartins/pyoembed
+.. image:: https://ci.rgm.io/buildStatus/icon?job=pyoembed
+   :target: https://ci.rgm.io/job/pyoembed/
 
 A Python library for oEmbed that supports auto-discovered and manually
 included providers.
