@@ -181,6 +181,12 @@ URLS = [
     'http://www.twitter.com/rafaelmartins/status/424199153364008960',
     'https://twitter.com/rafaelmartins/status/424199153364008960',
     'https://www.twitter.com/rafaelmartins/status/424199153364008960',
+
+    # Spotify
+    'http://open.spotify.com/track/0jkz56cwzYKs5xO1xwhZmr',
+    'http://play.spotify.com/track/6oTb6ZMymRaepsn1lQeOpa',
+    'https://open.spotify.com/track/0jkz56cwzYKs5xO1xwhZmr',
+    'https://play.spotify.com/track/6oTb6ZMymRaepsn1lQeOpa',
 ]
 
 
