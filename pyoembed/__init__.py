@@ -1,7 +1,15 @@
 import requests
 from collections import OrderedDict
-from urllib import urlencode
-from urlparse import parse_qsl, urlsplit, urlunsplit
+
+try:
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
+
+try:
+    from urlparse import parse_qsl, urlsplit, urlunsplit
+except ImportError:
+    from urllib.parse import parse_qsl, urlsplit, urlunsplit
 
 from pyoembed.data_types import get_data_type
 from pyoembed.exceptions import DataTypeException, ParserException, \

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from __future__ import print_function
+
 from pyoembed import oEmbed
 from pyoembed.exceptions import PyOembedException
 
@@ -194,14 +196,14 @@ if __name__ == '__main__':
     errors = 0
     for i in URLS:
         try:
-            print >> sys.stdout, i, '...',
+            print(i, '...', end=' ')
             sys.stdout.flush()
             oEmbed(i)
-        except PyOembedException, e:
-            print >> sys.stdout, 'fail'
-            print >> sys.stderr, e.message
+        except PyOembedException as e:
+            print('fail')
+            print(e)
             errors += 1
         else:
-            print >> sys.stdout, 'ok'
-    print >> sys.stdout, 'Errors: %d' % errors
+            print('ok')
+    print('Errors: %d' % errors)
     sys.exit(1 if errors > 0 else 0)
