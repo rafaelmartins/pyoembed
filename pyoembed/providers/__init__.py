@@ -1,10 +1,23 @@
 import re
+import sys
 from abc import ABCMeta, abstractproperty
 from collections import OrderedDict
-from urllib import urlencode
-from urlparse import parse_qsl, urlsplit, urlunsplit
+
+try:
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
+
+try:
+    from urlparse import parse_qsl, urlsplit, urlunsplit
+except ImportError:
+    from urllib.parse import parse_qsl, urlsplit, urlunsplit
 
 from pyoembed.utils import get_metaclass_objects
+
+str_type = str
+if sys.version_info[0] == 2:
+    str_type = basestring
 
 
 class BaseProvider(object):
@@ -34,7 +47,7 @@ class BaseProvider(object):
             return self._re_schemas
         _re_schemas = []
         for schema in self.oembed_schemas:
-            if not isinstance(schema, basestring):
+            if not isinstance(schema, str_type):
                 _re_schemas.append(schema)
             else:
                 _re_schemas.append(self._build_re(schema))

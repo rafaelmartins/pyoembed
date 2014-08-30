@@ -1,6 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-from urlparse import urljoin
+
+try:
+    from urlparse import urljoin
+except ImportError:
+    from urllib.parse import urljoin
 
 from pyoembed.exceptions import ProviderException
 from pyoembed.providers import BaseProvider
