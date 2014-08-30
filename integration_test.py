@@ -97,9 +97,6 @@ URLS = [
     # videos.sapo.pt
     'http://videos.sapo.pt/JySyzZSW0A1UBZBLhAW1',
 
-    # justin.tv
-    'http://www.justin.tv/fredrin',
-
     # official.fm
     'http://www.official.fm/playlists/9NMy?from=homepage&track_id=PfqH',
 
