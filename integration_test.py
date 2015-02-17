@@ -39,8 +39,10 @@ URLS = [
     # CollegeHumor
     'http://www.collegehumor.com/video/6953943/sir-david-attenborough-'
     'narrates-olympic-curling',
-    'https://www.collegehumor.com/video/6953943/sir-david-attenborough-'
-    'narrates-olympic-curling',
+
+    # broken, ssl
+    #'https://www.collegehumor.com/video/6953943/sir-david-attenborough-'
+    #'narrates-olympic-curling',
 
     # Jest
     'http://www.jest.com/video/201448/twitter-parody-political-account-'
