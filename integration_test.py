@@ -26,10 +26,6 @@ URLS = [
     'https://www.flickr.com/photos/24736958@N06/2337532608/',
     'http://flic.kr/p/4yyt1m',
 
-    # Revision3
-    'http://revision3.com/tekzilla/free-file-sync-meg-turney',
-    'http://www.revision3.com/tekzilla/free-file-sync-meg-turney',
-
     # Vimeo
     'http://vimeo.com/12414863',
     'https://vimeo.com/12414863',
@@ -43,10 +39,6 @@ URLS = [
     # broken, ssl
     #'https://www.collegehumor.com/video/6953943/sir-david-attenborough-'
     #'narrates-olympic-curling',
-
-    # Jest
-    'http://www.jest.com/video/201448/twitter-parody-political-account-'
-    'graveyard',
 
     # Poll Everywhere
     'http://www.polleverywhere.com/clickable_images/VkPbmAmhfr4iiyG',
