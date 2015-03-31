@@ -20,6 +20,9 @@ class XmlParser(BaseParser):
             tag = i.tag
             text = i.text
             if 'height' in tag or 'width' in tag:
-                text = int(text)
+                try:
+                    text = int(text)
+                except ValueError:
+                    pass
             rv[tag] = text
         return rv

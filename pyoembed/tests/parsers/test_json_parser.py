@@ -41,3 +41,27 @@ class JsonParserTestCase(unittest.TestCase):
                               '2nLsvPBqeZ8/hqdefault.jpg',
                               'type': 'video',
                               'thumbnail_height': 360})
+
+    def test_content_parse_with_percent(self):
+        content = get_fixture('sample-video-percent.json')
+        rv = self.parser.content_parse(content)
+        self.assertEqual(rv, {'provider_url': 'http://www.youtube.com/',
+                              'author_name': 'Showlivre',
+                              'title': u'Vespas Mandarinas em "Antes que '
+                              u'voc\xea conte at\xe9 dez" no Est\xfadio '
+                              u'Showlivre 2013',
+                              'html': u'<iframe width="100%" height="100%" '
+                              u'src="http://www.youtube.com/embed/2nLsvPBqeZ8'
+                              u'?feature=oembed" frameborder="0" '
+                              u'allowfullscreen></iframe>',
+                              'thumbnail_width': 480,
+                              'height': '100%',
+                              'width': '100%',
+                              'version': '1.0',
+                              'author_url':
+                              'http://www.youtube.com/user/showlivre',
+                              'provider_name': 'YouTube',
+                              'thumbnail_url': 'http://i1.ytimg.com/vi/'
+                              '2nLsvPBqeZ8/hqdefault.jpg',
+                              'type': 'video',
+                              'thumbnail_height': 360})
