@@ -29,7 +29,7 @@ class AutoDiscoverProvider(BaseProvider):
             raise ProviderException('Failed to auto-discover oEmbed provider '
                                     'for url: %s' % url)
 
-        bs = BeautifulSoup(response.text)
+        bs = BeautifulSoup(response.text, 'lxml')
 
         # we prefer json over xml, so let's try it first :)
         oembed_url = bs.find('link', type='application/json+oembed', href=True)
