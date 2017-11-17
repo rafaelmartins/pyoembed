@@ -16,7 +16,7 @@ cwd = os.path.dirname(os.path.abspath(__file__))
 
 setup(
     name='pyoembed',
-    version='0.1.1+',
+    version='0.1.2',
     license='BSD',
     description=('A Python library for oEmbed that supports auto-discovered '
                  'and manually included providers.'),
@@ -30,6 +30,7 @@ setup(
     install_requires=[
         'requests',
         'beautifulsoup4',
+        'lxml',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
