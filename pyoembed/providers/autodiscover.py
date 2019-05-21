@@ -1,4 +1,3 @@
-import requests
 from bs4 import BeautifulSoup
 
 try:
@@ -8,6 +7,7 @@ except ImportError:
 
 from pyoembed.exceptions import ProviderException
 from pyoembed.providers import BaseProvider
+from pyoembed import get_http_client
 
 
 class AutoDiscoverProvider(BaseProvider):
@@ -22,14 +22,15 @@ class AutoDiscoverProvider(BaseProvider):
     def url_supported(self, url):
         return True  # autodiscover supports anything :)
 
-    def oembed_url(self, url):
-        response = requests.get(url)
+    async def oembed_url(self, url):
+        client = get_http_client()
+        response = await client.get(url)
 
-        if not response.ok:
+        if not response.status == 200:
             raise ProviderException('Failed to auto-discover oEmbed provider '
                                     'for url: %s' % url)
-
-        bs = BeautifulSoup(response.text, 'lxml')
+        text = await response.text()
+        bs = BeautifulSoup(text, 'lxml')
 
         # we prefer json over xml, so let's try it first :)
         oembed_url = bs.find('link', type='application/json+oembed', href=True)

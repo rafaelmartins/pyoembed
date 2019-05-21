@@ -60,7 +60,7 @@ class BaseProvider(object):
                 return True
         return False
 
-    def oembed_url(self, url):
+    async def oembed_url(self, url):
         oembed_endpoint = self.oembed_endpoint.replace('{format}', 'json')
         scheme, netloc, path, qs, fragment = urlsplit(oembed_endpoint)
         query_params = OrderedDict(parse_qsl(qs))
@@ -68,10 +68,14 @@ class BaseProvider(object):
         return urlunsplit((scheme, netloc, path,
                            urlencode(query_params, True), fragment))
 
+    async def init_data(self):
+        return
 
-def get_provider(url):
+
+async def get_provider(url):
     providers = get_metaclass_objects(__name__, BaseProvider,
                                       lambda x: x.priority)
     for provider in providers:
+        await provider.init_data()
         if provider.url_supported(url):
             return provider

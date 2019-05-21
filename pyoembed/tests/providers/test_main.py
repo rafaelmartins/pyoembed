@@ -1,6 +1,8 @@
 import re
 import unittest
 
+import pytest
+
 from pyoembed.providers import BaseProvider
 
 
@@ -20,12 +22,13 @@ class BaseProviderTestCase(unittest.TestCase):
         self.assertTrue(provider.url_supported('http://google.com/bola/foo'))
         self.assertFalse(provider.url_supported('http://arcoiro.com/bola'))
 
-    def test_oembed_url(self):
+    @pytest.mark.asyncio
+    async def test_oembed_url(self):
         provider = MyProvider()
-        self.assertEqual(provider.oembed_url('http://bola.com/guda/arco'),
+        self.assertEqual(await provider.oembed_url('http://bola.com/guda/arco'),
                          'http://google.com/?format=json&url=http%3A%2F%2F'
                          'bola.com%2Fguda%2Farco')
-        self.assertEqual(provider.oembed_url('http://google.com/bola/foo'),
+        self.assertEqual(await provider.oembed_url('http://google.com/bola/foo'),
                          'http://google.com/?format=json&url=http%3A%2F%2F'
                          'google.com%2Fbola%2Ffoo')
 

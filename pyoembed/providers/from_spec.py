@@ -1,5 +1,6 @@
 import re
 from collections import OrderedDict
+import json
 try:
     from urllib import urlencode
 except ImportError:
@@ -9,9 +10,8 @@ try:
 except ImportError:
     from urllib.parse import parse_qsl, urlsplit, urlunsplit
 
-import requests
-
 from pyoembed.providers import BaseProvider
+from pyoembed import get_http_client
 
 
 def transform_pattern(pattern):
@@ -24,13 +24,14 @@ TESTS = {}
 INFO = {}
 
 
-def load_data(reload=False):
+async def load_data(reload=False, loop=None):
     global TESTS, INFO
     if TESTS and not reload:
         return
-    r = requests.get('http://oembed.com/providers.json')
-    assert r.ok
-    for provider_info in r.json():
+    r = await get_http_client(loop, loop).get('http://oembed.com/providers.json')
+    assert r.status == 200
+    data = json.loads(await r.text())
+    for provider_info in data:
         name = provider_info['provider_name']
         INFO[name] = provider_info
         for endpoint in provider_info['endpoints']:
@@ -47,8 +48,8 @@ class FromSpecProvider(BaseProvider):
     oembed_endpoint = None
     oembed_schemas = None
 
-    def __init__(self):
-        load_data()
+    async def init_data(self):
+        await load_data()
 
     def url_supported(self, url):
         global TESTS
@@ -57,7 +58,7 @@ class FromSpecProvider(BaseProvider):
                 return True
         return False
 
-    def oembed_url(self, url):
+    async def oembed_url(self, url):
         global TESTS, INFO
         for test, name in TESTS.items():
             if test.match(url):

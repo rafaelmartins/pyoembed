@@ -1,4 +1,4 @@
-import mock
+from unittest import mock
 import unittest
 
 from pyoembed.utils import get_metaclass_objects
