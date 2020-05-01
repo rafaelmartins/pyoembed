@@ -32,7 +32,7 @@ class BaseProviderTestCase(unittest.TestCase):
     def test_build_re(self):
         provider = MyProvider()
         _re = provider._build_re('http://google.com/*/foo')
-        self.assertEqual(_re.pattern, '^http\\:\\/\\/google\\.com\\/.*\\/foo$')
+        self.assertEqual(_re.pattern, r'^http://google\.com/.*/foo$')
 
     def test_get_re(self):
         provider = MyProvider()
@@ -40,9 +40,9 @@ class BaseProviderTestCase(unittest.TestCase):
         self.assertEqual(len(_re), 2)
         self.assertEqual(_re[0].pattern, 'http://bola\.com/guda/.*')
         self.assertEqual(_re[1].pattern,
-                         '^http\\:\\/\\/google\\.com\\/.*\\/foo$')
+                         r'^http://google\.com/.*/foo$')
         self.assertEqual(len(provider._re_schemas), 2)
         self.assertEqual(provider._re_schemas[0].pattern,
-                         'http://bola\.com/guda/.*')
+                         r'http://bola\.com/guda/.*')
         self.assertEqual(provider._re_schemas[1].pattern,
-                         '^http\\:\\/\\/google\\.com\\/.*\\/foo$')
+                         r'^http://google\.com/.*/foo$')
