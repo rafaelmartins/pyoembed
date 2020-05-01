@@ -1,6 +1,8 @@
 import re
 import unittest
 
+import pytest
+
 from pyoembed.providers import BaseProvider
 
 
@@ -20,19 +22,20 @@ class BaseProviderTestCase(unittest.TestCase):
         self.assertTrue(provider.url_supported('http://google.com/bola/foo'))
         self.assertFalse(provider.url_supported('http://arcoiro.com/bola'))
 
-    def test_oembed_url(self):
+    @pytest.mark.asyncio
+    async def test_oembed_url(self):
         provider = MyProvider()
-        self.assertEqual(provider.oembed_url('http://bola.com/guda/arco'),
+        self.assertEqual(await provider.oembed_url('http://bola.com/guda/arco'),
                          'http://google.com/?format=json&url=http%3A%2F%2F'
                          'bola.com%2Fguda%2Farco')
-        self.assertEqual(provider.oembed_url('http://google.com/bola/foo'),
+        self.assertEqual(await provider.oembed_url('http://google.com/bola/foo'),
                          'http://google.com/?format=json&url=http%3A%2F%2F'
                          'google.com%2Fbola%2Ffoo')
 
     def test_build_re(self):
         provider = MyProvider()
         _re = provider._build_re('http://google.com/*/foo')
-        self.assertEqual(_re.pattern, '^http\\:\\/\\/google\\.com\\/.*\\/foo$')
+        self.assertEqual(_re.pattern, r'^http://google\.com/.*/foo$')
 
     def test_get_re(self):
         provider = MyProvider()
@@ -40,9 +43,9 @@ class BaseProviderTestCase(unittest.TestCase):
         self.assertEqual(len(_re), 2)
         self.assertEqual(_re[0].pattern, 'http://bola\.com/guda/.*')
         self.assertEqual(_re[1].pattern,
-                         '^http\\:\\/\\/google\\.com\\/.*\\/foo$')
+                         r'^http://google\.com/.*/foo$')
         self.assertEqual(len(provider._re_schemas), 2)
         self.assertEqual(provider._re_schemas[0].pattern,
-                         'http://bola\.com/guda/.*')
+                         r'http://bola\.com/guda/.*')
         self.assertEqual(provider._re_schemas[1].pattern,
-                         '^http\\:\\/\\/google\\.com\\/.*\\/foo$')
+                         r'^http://google\.com/.*/foo$')

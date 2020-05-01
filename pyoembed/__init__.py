@@ -1,4 +1,4 @@
-import requests
+from aiohttp import ClientSession
 from collections import OrderedDict
 
 try:
@@ -17,12 +17,22 @@ from pyoembed.exceptions import DataTypeException, ParserException, \
 from pyoembed.parsers import get_parser
 from pyoembed.providers import get_provider
 
+HTTP_CLIENT = None
 
-def oEmbed(url, maxwidth=None, maxheight=None):
-    provider = get_provider(url)
+
+def get_http_client(loop=None, reset=False):
+    global HTTP_CLIENT
+    if reset or (HTTP_CLIENT is None):
+        HTTP_CLIENT = ClientSession(loop=loop)
+    return HTTP_CLIENT
+
+
+async def oEmbed(url, maxwidth=None, maxheight=None, http_client=None):
+    http_client = http_client or get_http_client()
+    provider = await get_provider(url)
     if provider is None:
         raise ProviderException('No provider found for url: %s' % url)
-    oembed_url = provider.oembed_url(url)
+    oembed_url = await provider.oembed_url(url)
 
     # lets parse url to append our own width/height parameters
     scheme, netloc, path, query_string, fragment = urlsplit(oembed_url)
@@ -39,8 +49,8 @@ def oEmbed(url, maxwidth=None, maxheight=None):
                             urlencode(query_params, True), fragment))
 
     # do actual oEmbed request
-    response = requests.get(final_url)
-    if not response.ok:
+    response = await http_client.get(final_url)
+    if response.status != 200:
         raise PyOembedException('Failed to do oEmbed request: %s' % url)
 
     # get content type
@@ -50,7 +60,7 @@ def oEmbed(url, maxwidth=None, maxheight=None):
         raise ParserException('Failed to find a parser for url: %s' % url)
 
     # parse oEmbed request
-    data = parser.content_parse(response.text)
+    data = parser.content_parse(await response.text())
 
     # get data type
     data_type = get_data_type(data)

@@ -28,7 +28,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'requests',
+        'aiohttp',
         'beautifulsoup4',
         'lxml',
     ],
@@ -39,5 +39,5 @@ setup(
         'Programming Language :: Python :: 2',
     ],
     test_suite='pyoembed.tests',
-    tests_require=['mock'],
+    tests_require=['pytest-asyncio'],
 )
