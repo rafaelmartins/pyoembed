@@ -1,3 +1,5 @@
+import cgi
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -29,7 +31,13 @@ class AutoDiscoverProvider(BaseProvider):
             raise ProviderException('Failed to auto-discover oEmbed provider '
                                     'for url: %s' % url)
 
-        bs = BeautifulSoup(response.text, 'lxml')
+        content_type = response.headers.get('Content-Type')
+        if content_type is None:
+            charset = None
+        else:
+            mime_type, parameters = cgi.parse_header(content_type)
+            charset = parameters.get('charset')
+        bs = BeautifulSoup(response.content, 'lxml', from_encoding=charset)
 
         # we prefer json over xml, so let's try it first :)
         oembed_url = bs.find('link', type='application/json+oembed', href=True)

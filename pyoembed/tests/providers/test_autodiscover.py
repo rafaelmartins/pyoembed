@@ -19,7 +19,7 @@ class AutoDiscoverProviderTestCase(unittest.TestCase):
     def test_oembed_url_request_failed(self, get):
         get.return_value = response = mock.Mock()
         response.ok = False
-        response.text = get_fixture('autodiscover-both.html')
+        response.content = get_fixture('autodiscover-both.html')
         with self.assertRaises(ProviderException):
             self.provider.oembed_url(self.url)
 
@@ -27,7 +27,8 @@ class AutoDiscoverProviderTestCase(unittest.TestCase):
     def test_oembed_url_none(self, get):
         get.return_value = response = mock.Mock()
         response.ok = True
-        response.text = get_fixture('autodiscover-none.html')
+        response.headers = {}
+        response.content = get_fixture('autodiscover-none.html')
         with self.assertRaises(ProviderException):
             self.provider.oembed_url(self.url)
 
@@ -35,7 +36,8 @@ class AutoDiscoverProviderTestCase(unittest.TestCase):
     def test_oembed_url_both(self, get):
         get.return_value = response = mock.Mock()
         response.ok = True
-        response.text = get_fixture('autodiscover-both.html')
+        response.headers = {}
+        response.content = get_fixture('autodiscover-both.html')
         self.assertEqual(self.provider.oembed_url(self.url),
                          'http://www.youtube.com/oembed?url=http%3A%2F%2F'
                          'www.youtube.com%2Fwatch%3Fv%3D2nLsvPBqeZ8'
@@ -45,7 +47,8 @@ class AutoDiscoverProviderTestCase(unittest.TestCase):
     def test_oembed_url_json(self, get):
         get.return_value = response = mock.Mock()
         response.ok = True
-        response.text = get_fixture('autodiscover-json.html')
+        response.headers = {}
+        response.content = get_fixture('autodiscover-json.html')
         self.assertEqual(self.provider.oembed_url(self.url),
                          'http://www.youtube.com/oembed?url=http%3A%2F%2F'
                          'www.youtube.com%2Fwatch%3Fv%3D2nLsvPBqeZ8'
@@ -55,7 +58,8 @@ class AutoDiscoverProviderTestCase(unittest.TestCase):
     def test_oembed_url_xml(self, get):
         get.return_value = response = mock.Mock()
         response.ok = True
-        response.text = get_fixture('autodiscover-xml.html')
+        response.headers = {}
+        response.content = get_fixture('autodiscover-xml.html')
         self.assertEqual(self.provider.oembed_url(self.url),
                          'http://www.youtube.com/oembed?url=http%3A%2F%2F'
                          'www.youtube.com%2Fwatch%3Fv%3D2nLsvPBqeZ8'
