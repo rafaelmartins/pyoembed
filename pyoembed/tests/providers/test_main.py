@@ -8,8 +8,11 @@ class MyProvider(BaseProvider):
 
     priority = 1
     oembed_endpoint = 'http://google.com/?format={format}'
-    oembed_schemas = [re.compile('http://bola\.com/guda/.*'),
+    oembed_schemas = [re.compile(r'http://bola\.com/guda/.*'),
                       'http://google.com/*/foo']
+
+
+GOOGLE_RE = r'^' + re.escape('http://google.com/') + r'.*' + re.escape('/foo') + r'$'
 
 
 class BaseProviderTestCase(unittest.TestCase):
@@ -32,17 +35,15 @@ class BaseProviderTestCase(unittest.TestCase):
     def test_build_re(self):
         provider = MyProvider()
         _re = provider._build_re('http://google.com/*/foo')
-        self.assertEqual(_re.pattern, '^http\\:\\/\\/google\\.com\\/.*\\/foo$')
+        self.assertEqual(_re.pattern, GOOGLE_RE)
 
     def test_get_re(self):
         provider = MyProvider()
         _re = provider._get_re()
         self.assertEqual(len(_re), 2)
-        self.assertEqual(_re[0].pattern, 'http://bola\.com/guda/.*')
-        self.assertEqual(_re[1].pattern,
-                         '^http\\:\\/\\/google\\.com\\/.*\\/foo$')
+        self.assertEqual(_re[0].pattern, r'http://bola\.com/guda/.*')
+        self.assertEqual(_re[1].pattern, GOOGLE_RE)
         self.assertEqual(len(provider._re_schemas), 2)
         self.assertEqual(provider._re_schemas[0].pattern,
-                         'http://bola\.com/guda/.*')
-        self.assertEqual(provider._re_schemas[1].pattern,
-                         '^http\\:\\/\\/google\\.com\\/.*\\/foo$')
+                         r'http://bola\.com/guda/.*')
+        self.assertEqual(provider._re_schemas[1].pattern, GOOGLE_RE)
