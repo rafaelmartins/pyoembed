@@ -41,4 +41,10 @@ class AutoDiscoverProvider(BaseProvider):
         if oembed_url is None:
             raise ProviderException('No oEmbed url found: %s' % url)
 
-        return urljoin(url, oembed_url['href'])
+        oembed_target_url = urljoin(url, oembed_url['href'])
+
+        # force https, since most sited do
+        if 'http://' in oembed_target_url:
+            oembed_target_url = oembed_target_url.replace('http://', 'https://')
+
+        return oembed_target_url
